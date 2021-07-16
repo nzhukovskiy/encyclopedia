@@ -1,0 +1,9 @@
+<h1>Одна статья</h1>
+<h2><%= @article.title %></h2>
+<div><%= @article.body %></div>
+<div>Дата рождения: <%= @article.birthdate.to_date %> <% if @article.deathdate == nil %>(<%= ((Time.now - @article.birthdate) / 60 / 60 / 24 / 365).to_i %> лет)<% end %></div>
+<% if @article.deathdate != nil %>
+  <div>Дата смерти: <%= @article.deathdate.to_date  %> (<%= ((@article.deathdate - @article.birthdate) / 60 / 60 / 24 / 365).to_i %> лет)</div>
+<% end %>
+
+<h1><%= link_to('На главную', controller: "articles", method: "index") %></h1>

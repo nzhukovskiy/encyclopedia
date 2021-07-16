@@ -1,0 +1,12 @@
+<h1>Создание новой статьи</h1>
+<%= form_with model: @article do |form| %>
+  <div><%= form.label :title %></div>
+  <div><%= form.text_field :title %></div>
+  <div><%= form.label :body %></div>
+  <div><%= form.text_field :body%></div>
+  <div><%= form.label :birthdate %></div>
+  <div><%= form.text_field :birthdate %></div>
+  <div><%= form.label :deathdate %></div>
+  <div><%= form.text_field :deathdate %></div>
+  <div><%= form.submit %></div>
+<% end %>
