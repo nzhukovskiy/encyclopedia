@@ -6,4 +6,6 @@
   <div>Дата смерти: <%= @article.deathdate.to_date  %> (<%= ((@article.deathdate - @article.birthdate) / 60 / 60 / 24 / 365).to_i %> лет)</div>
 <% end %>
 
+<h1><%= link_to('Редактировать', edit_article_path(@article)) %></h1>
+<h1><%= button_to('Удалить', article_path(@article), method: :delete, data: { confirm: "Вы уверены?"}) %></h1>
 <h1><%= link_to('На главную', controller: "articles", method: "index") %></h1>
