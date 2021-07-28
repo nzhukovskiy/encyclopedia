@@ -3,4 +3,7 @@ class Article < ApplicationRecord
   validates :body, presence: true
   validates :birthdate, presence: true
 
+  def get_resources
+    JSON.parse(self.resources)
+  end
 end
