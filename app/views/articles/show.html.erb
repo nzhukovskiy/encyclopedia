@@ -7,7 +7,11 @@
       <tr>
         <td colspan="2" align = "center">
           <div><%= duty["title"]%></div>
-          <div><%= duty["start_date"] + " - " + duty["end_date"]%></div>
+          <% if duty["end_date"] == "" %>
+            <div><%= "с " + duty["start_date"]%></div>
+          <% else %>
+            <div><%= duty["start_date"] + " - " + duty["end_date"]%></div>
+          <% end %>
           <% if duty["predecessor"] != "" %><div>Предшественник: <%= duty["predecessor"]%></div><% end %>
           <% if duty["successor"] != "" %><div>Преемник: <%= duty["successor"]%></div><% end %>
         </td>
