@@ -1,16 +1,28 @@
 <h1>Одна статья</h1>
 <h2><%= @article.title %></h2>
-<table border="1">
+<table border="1" width="20%">
   <caption><%= @article.title %></caption>
+  <% if @article.get_duties.count > 0 %>
+    <% @article.get_duties.each do |duty| %>
+      <tr>
+        <td colspan="2" align = "center">
+          <div><%= duty["title"]%></div>
+          <div><%= duty["start_date"] + " - " + duty["end_date"]%></div>
+          <% if duty["predecessor"] != "" %><div>Предшественник: <%= duty["predecessor"]%></div><% end %>
+          <% if duty["successor"] != "" %><div>Преемник: <%= duty["successor"]%></div><% end %>
+        </td>
+      </tr>
+    <% end %>
+  <% end %>
   <tr>
     <td>Рождение: </td>
-    <td><%= @article.birthdate.to_date %><% if @article.deathdate == nil %>(<%= ((Time.now - @article.birthdate) / 60 / 60 / 24 / 365.256363004).to_i %> лет)<% end %><%= ", " + @article.birth_place if  @article.birth_place != nil %><%= ", " + @article.birth_country if  @article.birth_country != nil %></div>
+    <td><%= @article.birthdate.to_date %><% if @article.deathdate == nil %>(<%= ((Time.now - @article.birthdate) / 60 / 60 / 24 / 365.256363004).to_i %> <%= year_helper(((Time.now - @article.birthdate) / 60 / 60 / 24 / 365.256363004).to_i) %>)<% end %><%= ", " + @article.birth_place if  @article.birth_place != nil %><%= ", " + @article.birth_country if  @article.birth_country != nil %></div>
     </td>
   </tr>
   <% if @article.deathdate != nil %>
         <tr>
           <td>Смерть: </td>
-          <td><%= @article.deathdate.to_date  %> (<%= ((@article.deathdate - @article.birthdate) / 60 / 60 / 24 / 365.256363004).to_i %> лет)<%= ", " + @article.death_place if  @article.death_place != nil %><%= ", " + @article.death_country if  @article.death_country != nil %></div>
+          <td><%= @article.deathdate.to_date  %> (<%= ((@article.deathdate - @article.birthdate) / 60 / 60 / 24 / 365.256363004).to_i %> <%= year_helper(((@article.deathdate - @article.birthdate) / 60 / 60 / 24 / 365.256363004).to_i) %>)<%= ", " + @article.death_place if  @article.death_place != nil %><%= ", " + @article.death_country if  @article.death_country != nil %></div>
       </td>
         </tr>
   <% end %>
