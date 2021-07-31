@@ -1,6 +1,6 @@
 <h1>Одна статья</h1>
 <h2><%= @article.title %></h2>
-<table border="1" width="20%">
+<table border="1" width="500vw">
   <caption><%= @article.title %></caption>
   <% if @article.get_duties.count > 0 %>
     <% @article.get_duties.each do |duty| %>
