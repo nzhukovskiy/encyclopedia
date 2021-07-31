@@ -17,9 +17,9 @@ module ApplicationHelper
       return "лет"
     elsif year % 10 > 1 and year % 10 < 5
       if year / 10 % 10 < 10 or year / 10 % 10 > 20
-        return "года"
-      else
         return "лет"
+      else
+        return "года"
       end
     else
       return "лет"
