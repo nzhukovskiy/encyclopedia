@@ -20,13 +20,13 @@
   <% end %>
   <tr>
     <td>Рождение: </td>
-    <td><%= date_to_words(@article.birthdate.to_date) %><% if @article.deathdate == nil %> (<%= ((Time.now - @article.birthdate) / 60 / 60 / 24 / 365.256363004).to_i %> <%= year_helper(((Time.now - @article.birthdate) / 60 / 60 / 24 / 365.256363004).to_i) %>)<% end %><%= ", " + @article.birth_place if  @article.birth_place != nil %><%= ", " + @article.birth_country if  @article.birth_country != nil %></div>
+    <td><%= date_to_words(@article.birthdate.to_date) %><% if @article.deathdate == nil %> (<%= ((Time.now - @article.birthdate) / 60 / 60 / 24 / 365.256363004).to_i %> <%= year_helper(((Time.now - @article.birthdate) / 60 / 60 / 24 / 365.256363004).to_i) %>)<% end %><%= ", " + @article.birth_place if  @article.birth_place != "" %><%= ", " + @article.birth_country if  @article.birth_country != "" %></div>
     </td>
   </tr>
   <% if @article.deathdate != nil %>
         <tr>
           <td>Смерть: </td>
-          <td><%= date_to_words(@article.deathdate.to_date)  %> (<%= ((@article.deathdate - @article.birthdate) / 60 / 60 / 24 / 365.256363004).to_i %> <%= year_helper(((@article.deathdate - @article.birthdate) / 60 / 60 / 24 / 365.256363004).to_i) %>)<%= ", " + @article.death_place if  @article.death_place != nil %><%= ", " + @article.death_country if  @article.death_country != nil %></div>
+          <td><%= date_to_words(@article.deathdate.to_date)  %> (<%= ((@article.deathdate - @article.birthdate) / 60 / 60 / 24 / 365.256363004).to_i %> <%= year_helper(((@article.deathdate - @article.birthdate) / 60 / 60 / 24 / 365.256363004).to_i) %>)<%= ", " + @article.death_place if  @article.death_place != "" %><%= ", " + @article.death_country if  @article.death_country != "" %></div>
       </td>
         </tr>
   <% end %>

@@ -11,13 +11,13 @@ module ApplicationHelper
 
   def year_helper(year)
     if year % 10 == 1
-      if year / 10 % 10 < 1 or year / 10 % 10 > 2
+      if year / 10 % 10 < 1 or year / 10 % 10 >= 2
         return "год"
       end
       return "лет"
     elsif year % 10 > 1 and year % 10 < 5
 
-      if year / 10 % 10 < 1 or year / 10 % 10 > 2
+      if year / 10 % 10 < 1 or year / 10 % 10 >= 2
         return "года"
       else
         return "лет"
