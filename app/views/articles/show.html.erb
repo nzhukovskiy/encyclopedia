@@ -18,11 +18,13 @@
       </tr>
     <% end %>
   <% end %>
+  <% if @article.birthdate != nil %>
   <tr>
     <td>Рождение: </td>
     <td><%= date_to_words(@article.birthdate.to_date) %><% if @article.deathdate == nil %> (<%= ((Time.now - @article.birthdate) / 60 / 60 / 24 / 365.256363004).to_i %> <%= year_helper(((Time.now - @article.birthdate) / 60 / 60 / 24 / 365.256363004).to_i) %>)<% end %><%= ", " + @article.birth_place if  @article.birth_place != "" %><%= ", " + @article.birth_country if  @article.birth_country != "" %></div>
     </td>
   </tr>
+  <% end %>
   <% if @article.deathdate != nil %>
         <tr>
           <td>Смерть: </td>
