@@ -24,13 +24,13 @@
     <td><%= date_to_words(@article.birthdate.to_date) %><% if @article.deathdate == nil %> (<%= ((Time.now - @article.birthdate) / 60 / 60 / 24 / 365.256363004).to_i %> <%= year_helper(((Time.now - @article.birthdate) / 60 / 60 / 24 / 365.256363004).to_i) %>)<% end %><%= ", " + @article.birth_place if  @article.birth_place != "" %><%= ", " + @article.birth_country if  @article.birth_country != "" %></div>
     </td>
   </tr>
-  <% end %>
-  <% if @article.deathdate != nil %>
-        <tr>
-          <td>Смерть: </td>
-          <td><%= date_to_words(@article.deathdate.to_date)  %> (<%= ((@article.deathdate - @article.birthdate) / 60 / 60 / 24 / 365.256363004).to_i %> <%= year_helper(((@article.deathdate - @article.birthdate) / 60 / 60 / 24 / 365.256363004).to_i) %>)<%= ", " + @article.death_place if  @article.death_place != "" %><%= ", " + @article.death_country if  @article.death_country != "" %></div>
-      </td>
-        </tr>
+    <% if @article.deathdate != nil %>
+          <tr>
+            <td>Смерть: </td>
+            <td><%= date_to_words(@article.deathdate.to_date)  %> (<%= ((@article.deathdate - @article.birthdate) / 60 / 60 / 24 / 365.256363004).to_i %> <%= year_helper(((@article.deathdate - @article.birthdate) / 60 / 60 / 24 / 365.256363004).to_i) %>)<%= ", " + @article.death_place if  @article.death_place != "" %><%= ", " + @article.death_country if  @article.death_country != "" %></div>
+        </td>
+          </tr>
+    <% end %>
   <% end %>
   <% if @article.get_resources.count > 0 %>
     <% @article.get_resources.each do |resource| %>
@@ -42,10 +42,7 @@
   <% end %>
 
 </table>
-<!--<div>Дата рождения: <%= @article.birthdate.to_date %> <% if @article.deathdate == nil %>(<%= ((Time.now - @article.birthdate) / 60 / 60 / 24 / 365.256363004).to_i %> лет)<% end %></div>
-<% if @article.deathdate != nil %>
-  <div>Дата смерти: <%= @article.deathdate.to_date  %> (<%= ((@article.deathdate - @article.birthdate) / 60 / 60 / 24 / 365.256363004).to_i %> лет)</div>
-<% end %>-->
+
 <div><%= @article.body %></div>
 <h1><%= link_to('Редактировать', edit_article_path(@article)) %></h1>
 <h1><%= button_to('Удалить', article_path(@article), method: :delete, data: { confirm: "Вы уверены?"}) %></h1>
