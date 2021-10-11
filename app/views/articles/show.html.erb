@@ -1,6 +1,6 @@
 <h1>Одна статья</h1>
 <h2><%= @article.title %></h2>
-<table border="1" width="500vw">
+<table border="1" width="500vw" style="font-size:18px;">
   <caption><%= @article.title %></caption>
   <% if @article.get_duties.count > 0 %>
     <% @article.get_duties.each do |duty| %>
@@ -41,9 +41,26 @@
     <% end %>
   <% end %>
 
+  <% if @article.get_columns_data.count > 0 %>
+    <% @article.get_columns_data.each do |columns_data| %>
+      <tr>
+        <td><%= columns_data["first"]%></td>
+        <td><%= columns_data["second"]%></td>
+        <td><%= columns_data["third"]%></td>
+      </tr>
+    <% end %>
+  <% end %>
+  <% if @article.coordinates.count > 0 %>
+    <% @article.coordinates.each do |coordinate| %>
+      <tr>
+        <%= coordinate %>
+      </tr>
+    <% end %>
+  <% end %>
+
 </table>
 
-<div><%= @article.body %></div>
+<div style="font-size:18px;"><%= simple_format(@article.body) %></div>
 <h1><%= link_to('Редактировать', edit_article_path(@article)) %></h1>
 <h1><%= button_to('Удалить', article_path(@article), method: :delete, data: { confirm: "Вы уверены?"}) %></h1>
 <h1><%= link_to('На главную', controller: "articles", method: "index") %></h1>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_31_131102) do
+ActiveRecord::Schema.define(version: 2021_09_01_152251) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,8 @@ ActiveRecord::Schema.define(version: 2021_07_31_131102) do
     t.string "death_place"
     t.text "resources", default: "[]"
     t.text "duties", default: "[]"
+    t.text "columns_data", default: "[]"
+    t.float "coordinates", default: [], array: true
   end
 
 end
