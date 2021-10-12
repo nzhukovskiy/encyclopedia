@@ -44,19 +44,26 @@
   <% if @article.get_columns_data.count > 0 %>
     <% @article.get_columns_data.each do |columns_data| %>
       <tr>
-        <td><%= columns_data["first"]%></td>
-        <td><%= columns_data["second"]%></td>
-        <td><%= columns_data["third"]%></td>
+        <% columns_data.each do |column_data| %>
+          <td><%= column_data[1]%></td>
+        <% end %>
       </tr>
     <% end %>
   <% end %>
-  <% if @article.coordinates.count > 0 %>
-    <% @article.coordinates.each do |coordinate| %>
-      <tr>
-        <%= coordinate %>
-      </tr>
-    <% end %>
+  <% if @article.coordinates != "" && @article.coordinates != "[]" && @article.coordinates != nil%>
+    <% coordinates = [] %>
+    <% coordinates += @article.coordinates.split(%r{,\s*}) %>
+    <tr>
+      <td>Координаты:</td>
+      <td><%= link_to(coordinates[0] + ', ' + coordinates[1], "https://www.google.ru/maps/@" + coordinates[0] + ',' + coordinates[1] + ",11z") %></td>
+    </tr>
+    <tr>
+      <td>Высота над уровнем моря:</td>
+      <td><%= @article.elevation %></td>
+    </tr>
   <% end %>
+
+
 
 </table>
 

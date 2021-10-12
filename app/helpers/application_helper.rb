@@ -1,4 +1,5 @@
 module ApplicationHelper
+  require 'net/http'
   def less_text(txt, n)
     if txt != nil
 
@@ -40,5 +41,12 @@ module ApplicationHelper
     #str += " "
     #str += "года"
     return str
+  end
+
+  def elevation_finder (url)
+    uri = URI(url)
+    response = Net::HTTP.get(uri)
+    res = JSON.parse(response)
+    return res["results"][0]["elevation"]
   end
 end
