@@ -59,7 +59,7 @@
     </tr>
     <tr>
       <td>Высота над уровнем моря:</td>
-      <td><%= @article.elevation %></td>
+      <td><%= @article.elevation.to_i.to_s + " м" %></td>
     </tr>
   <% end %>
 
