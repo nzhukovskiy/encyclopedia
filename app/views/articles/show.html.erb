@@ -50,7 +50,7 @@
       </tr>
     <% end %>
   <% end %>
-  <% if @article.coordinates != "" && @article.coordinates != "[]" && @article.coordinates != nil%>
+  <% if @article.coordinates != "" && @article.coordinates != nil%>
     <% coordinates = [] %>
     <% coordinates += @article.coordinates.split(%r{,\s*}) %>
     <tr>
