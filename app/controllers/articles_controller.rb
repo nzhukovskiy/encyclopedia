@@ -29,7 +29,7 @@ class ArticlesController < ApplicationController
 
   def update
     @article = Article.find(params[:id])
-    if params.require(:article).permit(:coordinates) != ""
+    if params.require(:article).permit(:coordinates)["coordinates"] != ""
       @article.elevation = set_elevation
     end
 
