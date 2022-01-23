@@ -11,4 +11,8 @@ class Article < ApplicationRecord
     # }]
     JSON.parse(self.duties)
   end
+
+  def get_columns_data
+    JSON.parse(self.columns_data)
+  end
 end

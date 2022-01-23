@@ -3,6 +3,9 @@ Rails.application.routes.draw do
 
   resources :articles
 
+  get 'login', to: "users#login"
+  post 'login', to: "users#login_action"
+  post 'logout', to: "users#logout"
   #get 'articles', to: "articles#index"
   #get 'articles/:id', to: "articles#show"
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

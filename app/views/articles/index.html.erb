@@ -1,8 +1,12 @@
 <h1>Статьи</h1>
-<%@articles.each do |article| %>
+<%= "Текущий пользователь: " + session[:current_user_id].to_s %>
+<%= button_to('Выйти', logout_path, method: :post) %>
+<%= link_to("Создать новую статью", controller: "articles", action: "new") %>
+<%@articles.order(:id).each do |article| %>
   <div>---------------------------</div>
   <h2><%= link_to(article.title, article)  %><%= button_to('Удалить', article_path(article), method: :delete, data: { confirm: "Вы уверены?"}) %></h2>
+  <h2><%= link_to('Редактировать', edit_article_path(article)) %></h2>
   <div><%= less_text(article.body, 20) %></div>
 <% end %>
-<%= link_to("Создать новую статью", controller: "articles", action: "new") %>
+
 

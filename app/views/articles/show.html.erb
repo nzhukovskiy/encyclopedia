@@ -1,6 +1,6 @@
 <h1>Одна статья</h1>
 <h2><%= @article.title %></h2>
-<table border="1" width="500vw">
+<table border="1" width="500vw" style="font-size:18px;">
   <caption><%= @article.title %></caption>
   <% if @article.get_duties.count > 0 %>
     <% @article.get_duties.each do |duty| %>
@@ -41,9 +41,33 @@
     <% end %>
   <% end %>
 
+  <% if @article.get_columns_data.count > 0 %>
+    <% @article.get_columns_data.each do |columns_data| %>
+      <tr>
+        <% columns_data.each do |column_data| %>
+          <td><%= column_data[1]%></td>
+        <% end %>
+      </tr>
+    <% end %>
+  <% end %>
+  <% if @article.coordinates != "" && @article.coordinates != nil%>
+    <% coordinates = [] %>
+    <% coordinates += @article.coordinates.split(%r{,\s*}) %>
+    <tr>
+      <td>Координаты:</td>
+      <td><%= link_to(coordinates[0] + ', ' + coordinates[1], "https://www.google.ru/maps/@" + coordinates[0] + ',' + coordinates[1] + ",11z") %></td>
+    </tr>
+    <tr>
+      <td>Высота над уровнем моря:</td>
+      <td><%= @article.elevation.to_i.to_s + " м" %></td>
+    </tr>
+  <% end %>
+
+
+
 </table>
 
-<div><%= @article.body %></div>
+<div style="font-size:18px;"><%= simple_format(@article.body) %></div>
 <h1><%= link_to('Редактировать', edit_article_path(@article)) %></h1>
 <h1><%= button_to('Удалить', article_path(@article), method: :delete, data: { confirm: "Вы уверены?"}) %></h1>
 <h1><%= link_to('На главную', controller: "articles", method: "index") %></h1>
