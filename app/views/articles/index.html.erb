@@ -1,4 +1,6 @@
 <h1>Статьи</h1>
+<%= "Текущий пользователь: " + session[:current_user_id].to_s %>
+<%= button_to('Выйти', logout_path, method: :post) %>
 <%= link_to("Создать новую статью", controller: "articles", action: "new") %>
 <%@articles.order(:id).each do |article| %>
   <div>---------------------------</div>
