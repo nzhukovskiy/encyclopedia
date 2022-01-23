@@ -6,7 +6,7 @@
   <div><%= form.label :title %></div>
   <div><%= form.text_field :title %></div>
   <div><%= form.label :body %></div>
-  <div><%= form.text_area :body%></div>
+  <div><%= form.text_area :body, size: "100x40"%></div>
   <div><%= form.label :birthdate %></div>
   <div><%= form.text_field :birthdate %></div>
   <div><%= form.label :deathdate %></div>
@@ -23,12 +23,12 @@
   <div><%= form.text_field :coordinates %></div>
   <div>Пример: [{"key": "Род деятельности", "value" : "Писатель" }, {"key": "Жанры", "value" : "Фантастика"}, {"key": "Годы активности", "value" : "1975-2010"}]</div>
   <div><%= form.label :resources %></div>
-  <div><%= form.text_area :resources %></div>
+  <div><%= form.text_area :resources, size: "30x10" %></div>
   <div>Пример: [{"title": "Президент", "start_date" : "1989", "end_date" : "1995", "predecessor" : "Ленин", "successor" : "Сталин" }]</div>
   <div><%= form.label :duties %></div>
-  <div><%= form.text_area :duties %></div>
+  <div><%= form.text_area :duties, size: "30x10" %></div>
   <div>Пример: [{"first": "Текст первого столбца", "second" : "Текст второго столбца", "third" : "Текст третьего столбца" }, {"first": "Текст первого столбца второй строки", "second" : "Текст второго столбца второй строки", "third" : "Текст третьего столбца" }]</div>
   <div><%= form.label :columns_data %></div>
-  <div><%= form.text_area :columns_data %></div>
+  <div><%= form.text_area :columns_data, size: "30x10" %></div>
   <div><%= form.submit %></div>
 <% end %>
