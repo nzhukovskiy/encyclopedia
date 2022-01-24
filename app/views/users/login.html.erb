@@ -1,9 +1,9 @@
 <%= form_with url: login_path do |form| %>
 
-  <div><%= form.label :name %></div>
+  <div><%= form.label :name, "Имя" %></div>
   <div><%= form.text_field :name %></div>
-  <div><%= form.label :password %></div>
+  <div><%= form.label :password, "Пароль" %></div>
   <div><%= form.text_field :password%></div>
-  <div><%= form.submit %></div>
+  <div><%= form.submit "Войти" %></div>
 <p>Hi</p>
 <% end %>
