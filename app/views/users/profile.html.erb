@@ -1,0 +1,36 @@
+
+<%= form_with url: users_profile_path_path do |form| %>
+  <%= "Страница пользователя: " + @user.name + " id: " + @user.id.to_s %>
+  <%= button_to('Выйти', logout_path, method: :post) %>
+  <div>История действий:</div>
+  <table border="1" width="500vw" style="font-size:18px;">
+    <tr>
+      <th>Название статьи</th>
+      <th>Тип действия</th>
+      <th>Дата</th>
+    </tr>
+    <% History.where(user_id: @user.id).order(action_date: :desc).each do |record| %>
+      <% a = Article.find(record.article_id) %>
+     <tr>
+       <td>
+         <%= link_to(a.title, a) %>
+       </td>
+
+       <td>
+         <% if record.action_type == 0 %>
+          <%= "Создание" %>
+         <% else %>
+          <%= "Обновление" %>
+         <% end %>
+       </td>
+       <td>
+         <%= record.action_date.getlocal("+03:00").to_formatted_s(:db) %>
+       </td>
+     </tr>
+    <% end %>
+
+
+
+  </table>
+  <h1><%= link_to('На главную', controller: "articles", method: "index") %></h1>
+<% end %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_23_140010) do
+ActiveRecord::Schema.define(version: 2022_01_24_142227) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,17 @@ ActiveRecord::Schema.define(version: 2022_01_23_140010) do
     t.text "columns_data", default: "[]"
     t.text "coordinates", default: ""
     t.float "elevation"
+  end
+
+  create_table "histories", force: :cascade do |t|
+    t.bigint "article_id"
+    t.bigint "user_id"
+    t.datetime "action_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "action_type"
+    t.index ["article_id"], name: "index_histories_on_article_id"
+    t.index ["user_id"], name: "index_histories_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

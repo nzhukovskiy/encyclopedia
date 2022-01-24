@@ -1,0 +1,32 @@
+<h1>История правок</h1>
+<h2>Название статьи: <%= @article.title %></h2>
+<div>История действий:</div>
+<table border="1" width="500vw" style="font-size:18px;">
+  <tr>
+    <th>Имя пользователя</th>
+    <th>Тип действия</th>
+    <th>Дата</th>
+  </tr>
+  <% History.where(article_id: @article.id).order(action_date: :desc).each do |record| %>
+    <% u = User.find(record.user_id) %>
+    <tr>
+      <td>
+        <%= link_to(u.name, users_profile_path_path(u.id)) %>
+      </td>
+      <td>
+        <% if record.action_type == 0 %>
+          <%= "Создание" %>
+        <% else %>
+          <%= "Обновление" %>
+        <% end %>
+      </td>
+      <td>
+        <%= record.action_date.getlocal("+03:00").to_formatted_s(:db) %>
+      </td>
+    </tr>
+  <% end %>
+
+
+
+</table>
+<h1><%= link_to('На главную', controller: "articles", method: "index") %></h1>

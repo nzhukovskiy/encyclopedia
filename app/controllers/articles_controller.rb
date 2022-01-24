@@ -16,7 +16,13 @@ class ArticlesController < ApplicationController
     if @article.coordinates != ""
       @article.elevation = set_elevation
     end
+
+
+
     if @article.save
+      h = History.create(user_id: session[:current_user_id], article_id: @article.id, action_date: Time.now.getutc, action_type: 0)
+      #pp h
+      #h.save
       redirect_to @article
     else
       render :new
@@ -34,6 +40,7 @@ class ArticlesController < ApplicationController
     end
 
     if @article.update(article_params)
+      h = History.create(user_id: session[:current_user_id], article_id: @article.id, action_date: Time.now.getutc, action_type: 1)
       redirect_to @article
     else
       render :edit
@@ -44,6 +51,9 @@ class ArticlesController < ApplicationController
     @article = Article.find(params[:id])
     @article.destroy
     redirect_to articles_path
+  end
+  def show_history
+    @article = Article.find(params[:id])
   end
   private
   def article_params
