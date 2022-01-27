@@ -1,0 +1,17 @@
+<%= form_with url: show_comments_path, model: @comment do |form| %>
+  <div><%= form.label :body, "Текст комментария" %></div>
+  <div><%= form.text_area :body, size: "100x25"%></div>
+  <div><%= form.submit %></div>
+<% end %>
+<% @comments.each do |comment| %>
+  <div>-------------------</div>
+  <div><%= "Комментарий пользователя: " + User.find(comment.user_id).name %></div>
+  <div><%= "Дата: " + comment.created_at.getlocal("+03:00").to_formatted_s(:db) %></div>
+  <div>Текст комментария:</div>
+  <%= comment.body %>
+  <% if comment.user_id == session[:current_user_id] %>
+    <%= button_to('Удалить', comment_destroy_path(id: @article.id, comment_id: comment.id), method: :delete, data: { confirm: "Вы уверены?"}) %>
+  <% end %>
+
+  <div>-------------------</div>
+<% end %>

@@ -3,7 +3,7 @@
   <%= "Страница пользователя: " + @user.name + " id: " + @user.id.to_s %>
   <%= button_to('Выйти', logout_path, method: :post) %>
   <div>История действий:</div>
-  <table border="1" width="500vw" style="font-size:18px;">
+  <table border="1" style="font-size:18px;">
     <tr>
       <th>Название статьи</th>
       <th>Тип действия</th>
