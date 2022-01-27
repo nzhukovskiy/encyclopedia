@@ -1,0 +1,28 @@
+<%= form_with url: get_leaders_path do |form| %>
+  <h1>Топ-50 самых активных пользователей</h1>
+  <!--<div>История действий:</div>-->
+
+    <% arr = [] %>
+    <% User.all.limit(50).each do |user| %>
+     <% c = History.where(user_id: user.id).count %>
+      <% if c != 0 %>
+        <% arr << {id: user.id, name: user.name, articles_count: c, last_change_date: History.where(user_id: user.id).order(action_date: :desc).first.action_date} %>
+      <% end %>
+    <% end %>
+  <table border="1" style="font-size:18px;">
+    <tr>
+      <th>Имя пользователя</th>
+      <th>Количество правок</th>
+      <th>Дата последней правки</th>
+    </tr>
+    <% arr.sort_by! { |el| -el[:articles_count]} %>
+    <% arr.each do |el| %>
+      <tr>
+        <th><%= link_to(el[:name], users_profile_path_path(el[:id])) %></th>
+        <th><%= el[:articles_count] %></th>
+        <th><%= el[:last_change_date] %></th>
+      </tr>
+    <% end %>
+  </table>
+  <h1><%= link_to('На главную', controller: "articles", method: "index") %></h1>
+<% end %>

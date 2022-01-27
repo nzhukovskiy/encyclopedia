@@ -1,6 +1,8 @@
 class Article < ApplicationRecord
   has_many :histories
   has_many :users, through: :histories
+  has_many :comments
+  has_many :users, through: :comments
   validates :title, presence: true
   validates :body, presence: true
 

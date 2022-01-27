@@ -71,6 +71,7 @@
 <% h = History.where(article_id: @article.id).order(action_date: :desc).first %>
 <% str = "Последняя правка сделана " +  h.action_date.getlocal("+03:00").to_formatted_s(:db) + " пользователем " + User.find(h.user_id).name %>
 <%= link_to(str, show_history_path(@article.id)) %>
+<div><%= link_to("Обсуждение", show_comments_path(@article.id)) %></div>
 <h1><%= link_to('Редактировать', edit_article_path(@article)) %></h1>
 <h1><%= button_to('Удалить', article_path(@article), method: :delete, data: { confirm: "Вы уверены?"}) %></h1>
 <h1><%= link_to('На главную', controller: "articles", method: "index") %></h1>

@@ -2,6 +2,8 @@
 <%= "Текущий пользователь: " + User.find(session[:current_user_id]).name + " id: " + session[:current_user_id].to_s %>
 <%= link_to("Перейти в профиль", users_profile_path_path(session[:current_user_id])) %>
 <%= button_to('Выйти', logout_path, method: :post) %>
+<%= link_to("Самые активные пользователи", get_leaders_path) %>
+<div>---------------------------</div>
 <%= link_to("Создать новую статью", controller: "articles", action: "new") %>
 <%@articles.order(:id).each do |article| %>
   <div>---------------------------</div>

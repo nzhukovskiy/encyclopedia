@@ -55,6 +55,11 @@ class ArticlesController < ApplicationController
   def show_history
     @article = Article.find(params[:id])
   end
+  def show_comments
+    @article = Article.find(params[:id])
+    @comments = @article.comments
+    @comment = Comment.new
+  end
   private
   def article_params
     params.require(:article).permit(:title, :body, :birthdate, :deathdate, :birth_country, :birth_place, :death_country, :death_place, :resources, :duties, :columns_data, :coordinates)
