@@ -20,7 +20,7 @@
       <tr>
         <th><%= link_to(el[:name], users_profile_path_path(el[:id])) %></th>
         <th><%= el[:articles_count] %></th>
-        <th><%= el[:last_change_date] %></th>
+        <th><%= el[:last_change_date].getlocal("+03:00").to_formatted_s(:db) %></th>
       </tr>
     <% end %>
   </table>
