@@ -11,13 +11,15 @@
     <% end %>
   <table border="1" style="font-size:18px;">
     <tr>
+      <th>Место</th>
       <th>Имя пользователя</th>
       <th>Количество правок</th>
       <th>Дата последней правки</th>
     </tr>
     <% arr.sort_by! { |el| -el[:articles_count]} %>
-    <% arr.each do |el| %>
+    <% arr.each_with_index do |el, i| %>
       <tr>
+        <th><%= i+1 %></th>
         <th><%= link_to(el[:name], users_profile_path_path(el[:id])) %></th>
         <th><%= el[:articles_count] %></th>
         <th><%= el[:last_change_date].getlocal("+03:00").to_formatted_s(:db) %></th>
