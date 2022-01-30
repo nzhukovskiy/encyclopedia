@@ -1,14 +1,5 @@
 module ApplicationHelper
   require 'net/http'
-  def less_text(txt, n)
-    if txt != nil
-
-      t = txt[0...n].strip()
-      t+="..." if txt.length>n
-      return t
-
-    end
-  end
 
   def year_helper(year)
     if year % 10 == 1

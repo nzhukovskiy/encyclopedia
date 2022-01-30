@@ -1,6 +1,7 @@
 
 <%= form_with url: users_profile_path_path do |form| %>
-  <%= "Страница пользователя: " + @user.name + " id: " + @user.id.to_s %>
+  <div><%= "Страница пользователя: " + @user.name + " id: " + @user.id.to_s %></div>
+  <div><%= "Зарегистрировался " + @user.created_at.getlocal("+03:00").to_formatted_s(:db) %></div>
   <%= button_to('Выйти', logout_path, method: :post) %>
   <div>История действий:</div>
   <table border="1" style="font-size:18px;">
@@ -10,23 +11,27 @@
       <th>Дата</th>
     </tr>
     <% History.where(user_id: @user.id).order(action_date: :desc).each do |record| %>
-      <% a = Article.find(record.article_id) %>
-     <tr>
-       <td>
-         <%= link_to(a.title, a) %>
-       </td>
+      <% if Article.exists?(record.article_id) %>
+        <% a = Article.find(record.article_id) %>
 
-       <td>
-         <% if record.action_type == 0 %>
-          <%= "Создание" %>
-         <% else %>
-          <%= "Обновление" %>
-         <% end %>
-       </td>
-       <td>
-         <%= record.action_date.getlocal("+03:00").to_formatted_s(:db) %>
-       </td>
-     </tr>
+        <tr>
+          <td>
+            <%= link_to(a.title, a) %>
+          </td>
+
+          <td>
+            <% if record.action_type == 0 %>
+              <%= "Создание" %>
+            <% else %>
+              <%= "Обновление" %>
+            <% end %>
+          </td>
+          <td>
+            <%= record.action_date.getlocal("+03:00").to_formatted_s(:db) %>
+          </td>
+        </tr>
+      <% end %>
+
     <% end %>
 
 
