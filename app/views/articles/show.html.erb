@@ -12,8 +12,8 @@
           <% else %>
             <div><%= duty["start_date"] + " - " + duty["end_date"]%></div>
           <% end %>
-          <% if duty["predecessor"] != "" %><div>Предшественник: <%= duty["predecessor"]%></div><% end %>
-          <% if duty["successor"] != "" %><div>Преемник: <%= duty["successor"]%></div><% end %>
+          <% if duty["predecessor"] != "" %><div>Предшественник: <%= simple_format(create_links(duty["predecessor"]), {}, wrapper_tag: "span")%></div><% end %>
+          <% if duty["successor"] != "" %><div>Преемник: <%= simple_format(create_links(duty["successor"]), {}, wrapper_tag: "span")%></div><% end %>
         </td>
       </tr>
     <% end %>
@@ -36,7 +36,7 @@
     <% @article.get_resources.each do |resource| %>
       <tr>
         <td><%= resource["key"] + ":"%></td>
-        <td><%= resource["value"]%></td>
+        <td><%= simple_format(create_links(resource["value"]), {}, wrapper_tag: "span")%></td>
       </tr>
     <% end %>
   <% end %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_27_092628) do
+ActiveRecord::Schema.define(version: 2022_01_30_151931) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 2022_01_27_092628) do
     t.text "columns_data", default: "[]"
     t.text "coordinates", default: ""
     t.float "elevation"
+    t.index ["title"], name: "index_articles_on_title", unique: true
   end
 
   create_table "comments", force: :cascade do |t|
