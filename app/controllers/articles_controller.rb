@@ -49,6 +49,7 @@ class ArticlesController < ApplicationController
 
   def destroy
     @article = Article.find(params[:id])
+    h = History.create(user_id: session[:current_user_id], article_id: @article.id, action_date: Time.now.getutc, action_type: 2)
     @article.destroy
     redirect_to articles_path
   end

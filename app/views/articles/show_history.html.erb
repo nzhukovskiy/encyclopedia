@@ -8,10 +8,15 @@
     <th>Дата</th>
   </tr>
   <% History.where(article_id: @article.id).order(action_date: :desc).each do |record| %>
-    <% u = User.find(record.user_id) %>
+
     <tr>
       <td>
-        <%= link_to(u.name, users_profile_path_path(u.id)) %>
+        <% if User.exists?(record.user_id) %>
+          <% u = User.find(record.user_id) %>
+          <%= link_to(u.name, users_profile_path_path(u.id)) %>
+        <% else %>
+          <%= "Пользователь удален" %>
+        <% end %>
       </td>
       <td>
         <% if record.action_type == 0 %>
