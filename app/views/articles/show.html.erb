@@ -1,6 +1,6 @@
 <h1>Одна статья</h1>
 <h2><%= @article.title %></h2>
-<table border="1" width="500vw" style="font-size:18px;">
+<table border="1" style="font-size:18px;">
   <caption><%= @article.title %></caption>
   <% if @article.get_duties.count > 0 %>
     <% @article.get_duties.each do |duty| %>
@@ -10,7 +10,7 @@
           <% if duty["end_date"] == "" %>
             <div><%= "с " + duty["start_date"]%></div>
           <% else %>
-            <div><%= duty["start_date"] + " - " + duty["end_date"]%></div>
+            <div><%= duty["start_date"] + " — " + duty["end_date"]%></div>
           <% end %>
           <% if duty["predecessor"] != "" %><div>Предшественник: <%= simple_format(create_links(duty["predecessor"]), {}, wrapper_tag: "span")%></div><% end %>
           <% if duty["successor"] != "" %><div>Преемник: <%= simple_format(create_links(duty["successor"]), {}, wrapper_tag: "span")%></div><% end %>
