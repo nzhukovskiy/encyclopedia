@@ -5,6 +5,9 @@ textarea
 {
   font-size: 18px;
 }
+
+
+
 article_links
 {
   color: red;
@@ -12,4 +15,52 @@ article_links
 .article_text
 {
   font-size:18px;
+  a
+  {
+    text-decoration: none;
+  }
+}
+.general-table
+{
+  font-size: 18px;
+  border-collapse: collapse;
+  width: 50%;
+  background-color: white;
+  td
+  {
+    a
+    {
+      text-decoration: none;
+    }
+  }
+}
+.main-table
+{
+  border: 1px solid black ;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+.main-table td
+{
+  border: 1px solid black;
+}
+.two-column-table
+{
+  border: 1px solid black;
+  border-top: 0;
+  margin-top: 0;
+  padding-top: 0;
+}
+.two-column-table td
+{
+  border: 1px solid black;
+  border-top: 0;
+}
+@media only screen and (max-width: 500px)
+{
+  .general-table
+  {
+    width: 100%;
+    max-width: 100%;
+  }
 }
