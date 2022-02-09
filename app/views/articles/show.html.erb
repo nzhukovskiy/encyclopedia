@@ -65,7 +65,7 @@
     <% @article.get_columns_data.each do |columns_data| %>
       <tr>
         <% columns_data.each do |column_data| %>
-          <td><%= simple_format(column_data[1])%></td>
+          <td><%= simple_format(create_links(column_data[1]), {}, wrapper_tag: "span")%></td>
         <% end %>
       </tr>
     <% end %>

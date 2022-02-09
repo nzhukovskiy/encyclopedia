@@ -5,6 +5,9 @@ textarea
 {
   font-size: 18px;
 }
+
+
+
 article_links
 {
   color: red;
@@ -12,6 +15,10 @@ article_links
 .article_text
 {
   font-size:18px;
+  a
+  {
+    text-decoration: none;
+  }
 }
 .general-table
 {
@@ -19,6 +26,13 @@ article_links
   border-collapse: collapse;
   width: 50%;
   background-color: white;
+  td
+  {
+    a
+    {
+      text-decoration: none;
+    }
+  }
 }
 .main-table
 {
