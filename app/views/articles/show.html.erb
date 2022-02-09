@@ -1,6 +1,7 @@
 <h1>Одна статья</h1>
 <h2><%= @article.title %></h2>
-<table border="1" style="font-size:18px;">
+<% if @article.get_duties.count > 0 || @article.birthdate != nil || @article.get_resources.count > 0 || (@article.coordinates != "" && @article.coordinates != nil)%>
+<table class = "general-table main-table" border="1" style="font-size:18px;">
   <caption><%= @article.title %></caption>
   <% if @article.get_duties.count > 0 %>
     <% @article.get_duties.each do |duty| %>
@@ -41,15 +42,7 @@
     <% end %>
   <% end %>
 
-  <% if @article.get_columns_data.count > 0 %>
-    <% @article.get_columns_data.each do |columns_data| %>
-      <tr>
-        <% columns_data.each do |column_data| %>
-          <td><%= column_data[1]%></td>
-        <% end %>
-      </tr>
-    <% end %>
-  <% end %>
+
   <% if @article.coordinates != "" && @article.coordinates != nil%>
     <% coordinates = [] %>
     <% coordinates += @article.coordinates.split(%r{,\s*}) %>
@@ -65,6 +58,18 @@
 
 
 
+</table>
+<% end %>
+<table class="general-table two-column-table">
+  <% if @article.get_columns_data.count > 0 %>
+    <% @article.get_columns_data.each do |columns_data| %>
+      <tr>
+        <% columns_data.each do |column_data| %>
+          <td><%= simple_format(column_data[1])%></td>
+        <% end %>
+      </tr>
+    <% end %>
+  <% end %>
 </table>
 
 
