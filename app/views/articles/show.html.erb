@@ -66,7 +66,11 @@
       <tr>
         <% columns_data.each do |column_data| %>
           <% if columns_data.count == 1 %>
-            <td colspan="2"><%= simple_format(create_links(column_data[1]), {}, wrapper_tag: "span")%></td>
+            <% if column_data[0] == "title" %>
+              <td colspan="2" align="center" class="title_cell"><%= simple_format(create_links(column_data[1]), {}, wrapper_tag: "span")%></td>
+            <% else %>
+              <td colspan="2"><%= simple_format(create_links(column_data[1]), {}, wrapper_tag: "span")%></td>
+            <% end %>
           <% else %>
             <td><%= simple_format(create_links(column_data[1]), {}, wrapper_tag: "span")%></td>
           <% end %>
