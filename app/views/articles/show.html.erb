@@ -65,7 +65,15 @@
     <% @article.get_columns_data.each do |columns_data| %>
       <tr>
         <% columns_data.each do |column_data| %>
-          <td><%= simple_format(create_links(column_data[1]), {}, wrapper_tag: "span")%></td>
+          <% if columns_data.count == 1 %>
+            <% if column_data[0] == "title" %>
+              <td colspan="2" align="center" class="title_cell"><%= simple_format(create_links(column_data[1]), {}, wrapper_tag: "span")%></td>
+            <% else %>
+              <td colspan="2"><%= simple_format(create_links(column_data[1]), {}, wrapper_tag: "span")%></td>
+            <% end %>
+          <% else %>
+            <td><%= simple_format(create_links(column_data[1]), {}, wrapper_tag: "span")%></td>
+          <% end %>
         <% end %>
       </tr>
     <% end %>

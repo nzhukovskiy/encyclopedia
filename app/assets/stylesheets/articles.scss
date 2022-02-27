@@ -6,7 +6,9 @@ textarea
   font-size: 18px;
 }
 
-
+body {
+  line-height: 1.35;
+}
 
 article_links
 {
@@ -67,4 +69,8 @@ article_links
     width: 100%;
     max-width: 100%;
   }
+}
+.title_cell
+{
+  background-color: #eaecf0;
 }
