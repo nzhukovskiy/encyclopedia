@@ -81,7 +81,7 @@
 </table>
 
 
-<div class = "article_text"><%= simple_format(create_links(@article.body)) %></div>
+<div class = "article_text"><%= simple_format(create_links(@article.body), {}, :sanitize => false) %></div>
 <% h = History.where(article_id: @article.id).order(action_date: :desc).first %>
 <% str = "Последняя правка сделана " +  h.action_date.getlocal("+03:00").to_formatted_s(:db) + " пользователем " + User.find(h.user_id).name %>
 <%= link_to(str, show_history_path(@article.id)) %>
