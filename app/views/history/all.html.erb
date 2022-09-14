@@ -1,0 +1,40 @@
+<h1>История правок всех статей</h1>
+<% Article.all.order(:id).each do |article| %>
+  <div>-----------------</div>
+  <h2><%=article.title %></h2>
+  <table border="1" width="500vw" style="font-size:18px;">
+  <% article.histories.order(action_date: :desc).each do |record| %>
+
+      <tr>
+        <th>Имя пользователя</th>
+        <th>Тип действия</th>
+        <th>Дата</th>
+      </tr>
+
+        <tr>
+          <td>
+            <% if User.exists?(record.user_id) %>
+              <% u = User.find(record.user_id) %>
+              <%= link_to(u.name, users_profile_path_path(u.id)) %>
+            <% else %>
+              <%= "Пользователь удален" %>
+            <% end %>
+          </td>
+          <td>
+            <% if record.action_type == 0 %>
+              <%= "Создание" %>
+            <% else %>
+              <%= "Обновление" %>
+            <% end %>
+          </td>
+          <td>
+            <%= record.action_date.getlocal("+03:00").to_formatted_s(:db) %>
+          </td>
+        </tr>
+      <% end %>
+
+
+
+  </table>
+
+<% end %>

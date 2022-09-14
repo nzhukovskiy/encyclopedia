@@ -7,7 +7,15 @@ import Rails from "@rails/ujs"
 import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
-
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
+if (!Turbolinks) {
+    location.reload();
+}
+
+Turbolinks.dispatch("turbolinks:load");
+/*console.log("Hi!!!!!!!!!!!!!!");
+document.addEventListener("turbolinks:load", function() {
+    console.log("2223232323");
+})*/
