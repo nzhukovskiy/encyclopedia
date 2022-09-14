@@ -21,14 +21,50 @@
   <div><%= form.text_field :death_country %></div>
   <div><%= form.label :coordinates %></div>
   <div><%= form.text_field :coordinates %></div>
-  <div>Пример: [{"key": "Род деятельности", "value" : "Писатель" }, {"key": "Жанры", "value" : "Фантастика"}, {"key": "Годы активности", "value" : "1975-2010"}]</div>
   <div><%= form.label :resources %></div>
-  <div><%= form.text_area :resources, size: "100x10" %></div>
+  <div>Пример: [{"key": "Род деятельности", "value" : "Писатель" }, {"key": "Жанры", "value" : "Фантастика"}, {"key": "Годы активности", "value" : "1975-2010"}]</div>
+  <section class="dynamic-fields-group-resources">
+    <section class="dynamic-fields">
+      <div class="single-dynamic-field-group">
+        <label>Ключ</label>
+        <textarea name="first" type="text" data-id="0" class="first-field"></textarea>
+        <label>Значение</label>
+        <textarea name="second" type="text" data-id="0" class="second-field"></textarea>
+      </div>
+
+    </section>
+    <div>
+      <button type="button" class="add-input-button">Добавить новое поле ввода</button>
+    </div>
+  </section>
+  <div><%= form.text_area :resources, size: "100x10", hidden: true %></div>
   <div>Пример: [{"title": "Президент", "start_date" : "1989", "end_date" : "1995", "predecessor" : "Ленин", "successor" : "Сталин" }]</div>
-  <div><%= form.label :duties %></div>
-  <div><%= form.text_area :duties, size: "100x10" %></div>
+  <section class="dynamic-fields-group-duties">
+    <section class="dynamic-fields">
+      <div class="single-dynamic-field-group">
+        <label>Название</label>
+        <textarea name="title" type="text" data-id="0" class="title-field"></textarea>
+        <label>Дата начала</label>
+        <textarea name="start_date" type="text" data-id="0" class="start_date-field"></textarea>
+        <label>Дата окончания</label>
+        <textarea name="end_date" type="text" data-id="0" class="end_date-field"></textarea>
+        <label>Предшественник</label>
+        <textarea name="predecessor" type="text" data-id="0" class="predecessor-field"></textarea>
+        <label>Преемник</label>
+        <textarea name="successor" type="text" data-id="0" class="successor-field"></textarea>
+      </div>
+
+    </section>
+    <div>
+      <button type="button" class="add-input-button">Добавить новое поле ввода</button>
+    </div>
+  </section>
+  <div><%= form.text_area :duties, size: "100x10", hidden: true %></div>
   <div>Пример: [{"first": "Текст первого столбца", "second" : "Текст второго столбца", "third" : "Текст третьего столбца" }, {"first": "Текст первого столбца второй строки", "second" : "Текст второго столбца второй строки", "third" : "Текст третьего столбца" }]</div>
   <div><%= form.label :columns_data %></div>
   <div><%= form.text_area :columns_data, size: "100x10" %></div>
   <div><%= form.submit %></div>
 <% end %>
+<%= javascript_pack_tag 'articles/new-resources' %>
+<%= javascript_pack_tag 'articles/new-duties' %>
+<%= javascript_pack_tag 'articles/new-columns' %>

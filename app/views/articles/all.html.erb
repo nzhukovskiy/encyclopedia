@@ -1,0 +1,96 @@
+<h1>Статьи</h1>
+<%= "Текущий пользователь: " + User.find(session[:current_user_id]).name + " id: " + session[:current_user_id].to_s %>
+
+<%Article.all.order(:id).each do |article| %>
+  <div>---------------------------</div>
+  <h1>Одна статья</h1>
+  <h2><%= article.title %></h2>
+  <% if article.get_duties.count > 0 || article.birthdate != nil || article.get_resources.count > 0 || (article.coordinates != "" && article.coordinates != nil)%>
+    <table class = "general-table main-table" border="1" style="font-size:18px;">
+      <caption><%= article.title %></caption>
+      <% if article.get_duties.count > 0 %>
+        <% article.get_duties.each do |duty| %>
+          <tr>
+            <td colspan="2" align = "center">
+              <div><%= duty["title"]%></div>
+              <% if duty["end_date"] == "" %>
+                <div><%= "с " + duty["start_date"]%></div>
+              <% else %>
+                <div><%= duty["start_date"] + " — " + duty["end_date"]%></div>
+              <% end %>
+              <% if duty["predecessor"] != "" %><div>Предшественник: <%= simple_format(create_links(duty["predecessor"]), {}, wrapper_tag: "span")%></div><% end %>
+              <% if duty["successor"] != "" %><div>Преемник: <%= simple_format(create_links(duty["successor"]), {}, wrapper_tag: "span")%></div><% end %>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+      <% if article.birthdate != nil %>
+        <tr>
+          <td>Рождение: </td>
+          <td><%= date_to_words(article.birthdate.to_date) %><% if article.deathdate == nil %> (<%= ((Time.now - article.birthdate) / 60 / 60 / 24 / 365.256363004).to_i %> <%= year_helper(((Time.now - article.birthdate) / 60 / 60 / 24 / 365.256363004).to_i) %>)<% end %><%= ", " + article.birth_place if  article.birth_place != "" %><%= ", " + article.birth_country if  article.birth_country != "" %></div>
+          </td>
+        </tr>
+        <% if article.deathdate != nil %>
+          <tr>
+            <td>Смерть: </td>
+            <td><%= date_to_words(article.deathdate.to_date)  %> (<%= ((article.deathdate - article.birthdate) / 60 / 60 / 24 / 365.256363004).to_i %> <%= year_helper(((article.deathdate - article.birthdate) / 60 / 60 / 24 / 365.256363004).to_i) %>)<%= ", " + article.death_place if  article.death_place != "" %><%= ", " + article.death_country if  article.death_country != "" %></div>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+      <% if article.get_resources.count > 0 %>
+        <% article.get_resources.each do |resource| %>
+          <tr>
+            <td><%= resource["key"] + ":"%></td>
+            <td><%= simple_format(create_links(resource["value"]), {}, wrapper_tag: "span")%></td>
+          </tr>
+        <% end %>
+      <% end %>
+
+
+      <% if article.coordinates != "" && article.coordinates != nil%>
+        <% coordinates = [] %>
+        <% coordinates += article.coordinates.split(%r{,\s*}) %>
+        <tr>
+          <td>Координаты:</td>
+          <td><%= link_to(coordinates[0] + ', ' + coordinates[1], "https://www.google.ru/maps/@" + coordinates[0] + ',' + coordinates[1] + ",11z") %></td>
+        </tr>
+        <tr>
+          <td>Высота над уровнем моря:</td>
+          <td><%= article.elevation.to_i.to_s + " м" %></td>
+        </tr>
+      <% end %>
+
+
+
+    </table>
+  <% end %>
+  <table class="general-table two-column-table">
+    <% if article.get_columns_data.count > 0 %>
+      <% article.get_columns_data.each do |columns_data| %>
+        <tr>
+          <% columns_data.each do |column_data| %>
+            <% if columns_data.count == 1 %>
+              <% if column_data[0] == "title" %>
+                <td colspan="2" align="center" class="title_cell"><%= simple_format(create_links(column_data[1]), {}, wrapper_tag: "span")%></td>
+              <% else %>
+                <td colspan="2"><%= simple_format(create_links(column_data[1]), {}, wrapper_tag: "span")%></td>
+              <% end %>
+            <% else %>
+              <td><%= simple_format(create_links(column_data[1]), {}, wrapper_tag: "span")%></td>
+            <% end %>
+          <% end %>
+        </tr>
+      <% end %>
+    <% end %>
+  </table>
+
+
+  <div class = "article_text"><%= simple_format(create_links(article.body), {}, :sanitize => false) %></div>
+  <% h = History.where(article_id: article.id).order(action_date: :desc).first %>
+  <% str = "Последняя правка сделана " +  h.action_date.getlocal("+03:00").to_formatted_s(:db) + " пользователем " + User.find(h.user_id).name %>
+  <%= link_to(str, show_history_path(article.id)) %>
+  <% [1..50].each do |i| %>
+    <br>
+  <% end %>
+<% end %>
