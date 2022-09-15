@@ -95,14 +95,22 @@ class ArticlesController < ApplicationController
       #merged_pdf << CombinePDF.parse(single_pdf)
     #end
     article_pdf = render_to_string pdf: "some_file_name", template: "articles/all.html.erb", layout:'pdf.html', encoding: "UTF-8"
-    save_path="/mnt/c/Users/user/Documents/PDFs/articles.pdf"
-    File.open(save_path, 'wb') do |file|
+    article_text = Article.all.order(:id).as_json
+    save_path="/mnt/c/Users/user/Documents/PDFs/Alternate/"
+    File.open(save_path + "articles.pdf", 'wb') do |file|
       file << article_pdf
     end
+    File.open(save_path + "text_logs/articles.json", 'wb') do |file|
+      file << article_text
+    end
     history_pdf = render_to_string pdf: "some_file_name", template: "history/all.html.erb", layout:'pdf.html', encoding: "UTF-8"
-    save_path="/mnt/c/Users/user/Documents/PDFs/history.pdf"
-    File.open(save_path, 'wb') do |file|
+    history_text = History.all.order(:id).as_json
+    #save_path="/mnt/c/Users/user/Documents/PDFs/Alternate/history.pdf"
+    File.open(save_path + "history.pdf", 'wb') do |file|
       file << history_pdf
+    end
+    File.open(save_path + "text_logs/history.json", 'wb') do |file|
+      file << history_text
     end
   end
 end

@@ -61,7 +61,28 @@
   </section>
   <div><%= form.text_area :duties, size: "100x10", hidden: true %></div>
   <div>Пример: [{"first": "Текст первого столбца", "second" : "Текст второго столбца", "third" : "Текст третьего столбца" }, {"first": "Текст первого столбца второй строки", "second" : "Текст второго столбца второй строки", "third" : "Текст третьего столбца" }]</div>
-  <div><%= form.label :columns_data %></div>
+  <section class="dynamic-fields-group-columns">
+    <section class="dynamic-fields">
+      <div class="single-dynamic-field-group">
+        <label>Текст столбца</label>
+        <textarea name="first" type="text" data-id="0" class="column1-field"></textarea>
+        <label>Текст столбца</label>
+        <textarea name="second" type="text" data-id="0" class="column2-field"></textarea>
+        <button type="button" data-id="0" class="add-column-button">Добавить новый столбец</button>
+        <div class="remove-column-group">
+          <select class="row0-select">
+            Выберите колонку для удаления
+            <option value="1">1</option>
+            <option value="2">2</option>
+          </select>
+          <button type="button" data-id="0" class="remove-column-button">Удалить столбец</button>
+        </div>
+      </div>
+    </section>
+    <div>
+      <button type="button" class="add-input-button">Добавить новое поле ввода</button>
+    </div>
+  </section>
   <div><%= form.text_area :columns_data, size: "100x10" %></div>
   <div><%= form.submit %></div>
 <% end %>

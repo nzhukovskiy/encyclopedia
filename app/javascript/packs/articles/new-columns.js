@@ -10,6 +10,12 @@ let fieldsArrayColumns = [{
 let propertiesNumberArray = [2];
 if (resFieldColumns.textContent !== "[]") {
     fieldsArrayColumns = JSON.parse(resFieldColumns.textContent);
+    propertiesNumberArray = [];
+    fieldsArrayColumns.forEach(obj => {
+        //console.log(obj);
+        propertiesNumberArray.push(Object.keys(obj).length);
+        //console.log(propertiesNumberArray);
+    })
     updateViewColumns();
 }
 
@@ -27,25 +33,32 @@ function updateViewColumns() {
     let fieldGroup = document.querySelector(".dynamic-fields-group-columns .dynamic-fields");
     fieldGroup.innerHTML = '';
     fieldsArrayColumns.forEach( function(el, i) {
-        if (i==0) {
-            fieldGroup.insertAdjacentHTML('beforeend', `<div class="single-dynamic-field-group">`);
-            for (let j = 1; j <= propertiesNumberArray[i]; j++) {
-                fieldGroup.insertAdjacentHTML('beforeend', `<label>Текст столбца</label>
+        fieldGroup.insertAdjacentHTML('beforeend', `<div class="single-dynamic-field-group">`);
+        for (let j = 1; j <= propertiesNumberArray[i]; j++) {
+            fieldGroup.insertAdjacentHTML('beforeend', `<label>Текст столбца</label>
                 <textarea name="first" data-id="${i}" class="column${j}-field">${el[`column${j}`]}</textarea>`);
+        }
+        fieldGroup.insertAdjacentHTML('beforeend', `<button type="button" data-id="${i}" class="add-column-button">Добавить новый столбец</button>`);
+        if (propertiesNumberArray[i] > 1) {
+            fieldGroup.insertAdjacentHTML('beforeend', `<div class="remove-column-group">
+                <select class="row${i}-select">
+                    Выберите колонку для удаления
+                </select>
+                <button type="button" data-id="${i}" class="remove-column-button">Удалить столбец</button>
+            </div>`);
+            for (let j = 1; j <= propertiesNumberArray[i]; j++) {
+                let option = document.createElement("option");
+                option.value = j;
+                option.textContent = j;
+                document.querySelector(`.row${i}-select`).appendChild(option);
             }
-            fieldGroup.insertAdjacentHTML('beforeend', `<button type="button" data-id="${i}" class="add-column-button">Добавить новый столбец</button>
-      </div>`);
+        }
+        if (i==0) {
+            fieldGroup.insertAdjacentHTML('beforeend',`</div>`);
         }
         else {
-            fieldGroup.insertAdjacentHTML('beforeend', `<div class="single-dynamic-field-group">`);
-            for (let j = 1; j <= propertiesNumberArray[i]; j++) {
-                fieldGroup.insertAdjacentHTML('beforeend', `<label>Текст столбца</label>
-                <textarea name="first" data-id="${i}" class="column${j}-field">${el[`column${j}`]}</textarea>`);
-            }
-            fieldGroup.insertAdjacentHTML('beforeend', `<button type="button" data-id="${i}" class="add-column-button">Добавить новый столбец</button>
-      </div>
-      <button class="remove-input-button" data-id="${i}">Удалить поле ввода</button>
-        </div>`);
+            fieldGroup.insertAdjacentHTML('beforeend',`<button class="remove-input-button" data-id="${i}">Удалить поле ввода</button></div>`);
+
         }
 
     })
@@ -60,7 +73,6 @@ function RefreshAllListenersColumns() {
             fieldsArrayColumns.splice(event.target.dataset.id, 1);
             propertiesNumberArray.splice(event.target.dataset.id, 1);
             updateViewColumns();
-            //console.log(event.target.dataset.id);
         })
     })
 }
@@ -69,6 +81,15 @@ function RefreshAddColumnButtons() {
         el.addEventListener("click", function(event) {
             propertiesNumberArray[event.target.dataset.id]++;
             fieldsArrayColumns[event.target.dataset.id][`column${propertiesNumberArray[event.target.dataset.id]}`] = "";
+            updateViewColumns();
+        })
+    })
+    document.querySelectorAll(".dynamic-fields-group-columns .remove-column-button").forEach(el => {
+        el.addEventListener("click", function(event) {
+            let columnToRemove = document.querySelector(`.row${event.target.dataset.id}-select`).value;
+            delete fieldsArrayColumns[event.target.dataset.id][`column${columnToRemove}`];
+            propertiesNumberArray[event.target.dataset.id]--;
+            ShiftColumnProperties(event.target.dataset.id, parseInt(columnToRemove)+1);
             updateViewColumns();
         })
     })
@@ -82,5 +103,12 @@ function RefreshFieldListenersColumns() {
                 resFieldColumns.textContent = JSON.stringify(fieldsArrayColumns);
             })
         })
+    }
+}
+function ShiftColumnProperties(rowIndex, startColumn, offset=-1) {
+    for (let i = startColumn; i <= propertiesNumberArray[rowIndex] + 1; i++) {
+        let temp = fieldsArrayColumns[rowIndex][`column${i}`];
+        fieldsArrayColumns[rowIndex][`column${i+offset}`] = temp;
+        delete fieldsArrayColumns[rowIndex][`column${i}`];
     }
 }
