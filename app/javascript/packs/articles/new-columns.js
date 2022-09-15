@@ -8,12 +8,20 @@ let fieldsArrayColumns = [{
     "column2": ""
 }];
 let propertiesNumberArray = [2];
+let isRowChecked = [false];
 if (resFieldColumns.textContent !== "[]") {
     fieldsArrayColumns = JSON.parse(resFieldColumns.textContent);
     propertiesNumberArray = [];
+    isRowChecked = [];
     fieldsArrayColumns.forEach(obj => {
         //console.log(obj);
         propertiesNumberArray.push(Object.keys(obj).length);
+        if (obj.title !== undefined) {
+            isRowChecked.push(true);
+        }
+        else {
+            isRowChecked.push(false);
+        }
         //console.log(propertiesNumberArray);
     })
     updateViewColumns();
@@ -25,6 +33,7 @@ document.querySelector(".dynamic-fields-group-columns .add-input-button").addEve
         "column2": ""
     })
     propertiesNumberArray.push(2);
+    isRowChecked.push(false)
     updateViewColumns();
 });
 RefreshFieldListenersColumns();
@@ -34,9 +43,15 @@ function updateViewColumns() {
     fieldGroup.innerHTML = '';
     fieldsArrayColumns.forEach( function(el, i) {
         fieldGroup.insertAdjacentHTML('beforeend', `<div class="single-dynamic-field-group">`);
-        for (let j = 1; j <= propertiesNumberArray[i]; j++) {
-            fieldGroup.insertAdjacentHTML('beforeend', `<label>Текст столбца</label>
+        if (isRowChecked[i] === true) {
+            fieldGroup.insertAdjacentHTML('beforeend', `<label>Название</label>
+                <textarea name="first" data-id="${i}" class="title-field">${el[`title`]}</textarea>`);
+        }
+        else {
+            for (let j = 1; j <= propertiesNumberArray[i]; j++) {
+                fieldGroup.insertAdjacentHTML('beforeend', `<label>Текст столбца</label>
                 <textarea name="first" data-id="${i}" class="column${j}-field">${el[`column${j}`]}</textarea>`);
+            }
         }
         fieldGroup.insertAdjacentHTML('beforeend', `<button type="button" data-id="${i}" class="add-column-button">Добавить новый столбец</button>`);
         if (propertiesNumberArray[i] > 1) {
@@ -53,7 +68,17 @@ function updateViewColumns() {
                 document.querySelector(`.row${i}-select`).appendChild(option);
             }
         }
-        if (i==0) {
+        else {
+            if (isRowChecked[i] === true) {
+                fieldGroup.insertAdjacentHTML('beforeend', `<label>Название</label>
+        <input type="checkbox" data-id="${i}" class="title-checkbox" checked>`);
+            }
+            else {
+                fieldGroup.insertAdjacentHTML('beforeend', `<label>Название</label>
+        <input type="checkbox" data-id="${i}" class="title-checkbox">`);
+            }
+        }
+        if (i===0) {
             fieldGroup.insertAdjacentHTML('beforeend',`</div>`);
         }
         else {
@@ -63,7 +88,7 @@ function updateViewColumns() {
 
     })
     RefreshAllListenersColumns();
-    RefreshFieldListenersColumns(fieldsArrayColumns, resFieldColumns);
+    RefreshFieldListenersColumns();
     RefreshAddColumnButtons();
     resFieldColumns.textContent = JSON.stringify(fieldsArrayColumns);
 }
@@ -93,6 +118,22 @@ function RefreshAddColumnButtons() {
             updateViewColumns();
         })
     })
+    document.querySelectorAll(".dynamic-fields-group-columns .title-checkbox").forEach(el => {
+        el.addEventListener("click", function(event) {
+            if (event.target.checked) {
+                console.log("Checked!!!!");
+                fieldsArrayColumns[event.target.dataset.id]['title'] = fieldsArrayColumns[event.target.dataset.id]['column1'];
+                delete fieldsArrayColumns[event.target.dataset.id]['column1'];
+            }
+            else {
+                fieldsArrayColumns[event.target.dataset.id]['column1'] = fieldsArrayColumns[event.target.dataset.id]['title'];
+                delete fieldsArrayColumns[event.target.dataset.id]['title'];
+                console.log("Not Checked!!!!");
+            }
+            isRowChecked[event.target.dataset.id] = !isRowChecked[event.target.dataset.id];
+            updateViewColumns();
+        })
+    })
 }
 function RefreshFieldListenersColumns() {
     let maxPropertiesCount = Math.max.apply(Math, propertiesNumberArray);
@@ -104,6 +145,12 @@ function RefreshFieldListenersColumns() {
             })
         })
     }
+    document.querySelectorAll(`.dynamic-fields-group-columns .title-field`).forEach(el => {
+        el.addEventListener('change', function(event) {
+            fieldsArrayColumns[event.target.dataset.id][`title`] = event.target.value;
+            resFieldColumns.textContent = JSON.stringify(fieldsArrayColumns);
+        })
+    })
 }
 function ShiftColumnProperties(rowIndex, startColumn, offset=-1) {
     for (let i = startColumn; i <= propertiesNumberArray[rowIndex] + 1; i++) {
