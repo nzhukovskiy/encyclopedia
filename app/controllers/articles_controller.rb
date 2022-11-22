@@ -1,6 +1,6 @@
 #require 'combine_pdf'
 class ArticlesController < ApplicationController
-  after_action :log_to_pdf, only: [:create, :update, :destroy]
+  after_action :log_to_json, only: [:create, :update, :destroy]
   def index
     @articles = Article.all
   end
@@ -109,6 +109,17 @@ class ArticlesController < ApplicationController
     File.open(save_path + "history.pdf", 'wb') do |file|
       file << history_pdf
     end
+    File.open(save_path + "text_logs/history.json", 'wb') do |file|
+      file << history_text
+    end
+  end
+  def log_to_json
+    save_path="/mnt/c/Files/Alternate/"
+    article_text = Article.all.order(:id).as_json
+    File.open(save_path + "text_logs/articles.json", 'wb') do |file|
+      file << article_text
+    end
+    history_text = History.all.order(:id).as_json
     File.open(save_path + "text_logs/history.json", 'wb') do |file|
       file << history_text
     end
