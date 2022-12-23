@@ -14,7 +14,7 @@ if (resFieldColumns.textContent !== "[]") {
     propertiesNumberArray = [];
     isRowChecked = [];
     fieldsArrayColumns.forEach(obj => {
-        //console.log(obj);
+        console.log(obj);
         propertiesNumberArray.push(Object.keys(obj).length);
         if (obj.title !== undefined) {
             isRowChecked.push(true);
@@ -24,6 +24,7 @@ if (resFieldColumns.textContent !== "[]") {
         }
         //console.log(propertiesNumberArray);
     })
+    console.log(fieldsArrayColumns);
     updateViewColumns();
 }
 
