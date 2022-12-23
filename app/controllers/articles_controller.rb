@@ -46,12 +46,17 @@ class ArticlesController < ApplicationController
 
   def update
     @article = Article.find(params[:id])
+    old_article = @article.dup
     if params.require(:article).permit(:coordinates)["coordinates"] != ""
       @article.elevation = set_elevation
     end
 
     if @article.update(article_params)
-      h = History.create(user_id: session[:current_user_id], article_id: @article.id, action_date: Time.now.getutc, action_type: 1)
+      archived = ArchivedArticle.create(old_article.attributes.except("id", "created_at", "updated_at"))
+      last_history = History.where(article_id: @article.id, next_archived_id: nil).order(action_date: :asc).last
+      h = History.create(user_id: session[:current_user_id], article_id: @article.id, previous_archived_id: archived.id, action_date: Time.now.getutc, action_type: 1)
+      last_history.next_archived_id = archived.id
+      last_history.save
       redirect_to @article
     else
       render :edit
@@ -60,7 +65,12 @@ class ArticlesController < ApplicationController
 
   def destroy
     @article = Article.find(params[:id])
-    h = History.create(user_id: session[:current_user_id], article_id: @article.id, action_date: Time.now.getutc, action_type: 2)
+    old_article = @article.dup
+    archived = ArchivedArticle.create(old_article.attributes.except("id", "created_at", "updated_at"))
+    last_history = History.where(article_id: @article.id, next_archived_id: nil).order(action_date: :asc).last
+    h = History.create(user_id: session[:current_user_id], article_id: @article.id, previous_archived_id: archived.id, action_date: Time.now.getutc, action_type: 2)
+    last_history.next_archived_id = archived.id
+    last_history.save
     @article.destroy
     #redirect_to root_path
   end

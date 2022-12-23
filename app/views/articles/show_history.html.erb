@@ -26,7 +26,7 @@
         <% end %>
       </td>
       <td>
-        <%= record.action_date.getlocal("+03:00").to_formatted_s(:db) %>
+        <%= link_to(record.action_date.getlocal("+03:00").to_formatted_s(:db), show_single_history_path(record.id))%>
       </td>
     </tr>
   <% end %>
