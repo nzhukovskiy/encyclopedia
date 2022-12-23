@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get 'articles/:id/comments', to: "articles#show_comments", as: "show_comments"
   post 'articles/:id/comments', to: "comments#create"
   delete 'articles/:id/comments/:comment_id', to: "comments#destroy", as: "comment_destroy"
+  get 'histories/:id/', to: "histories#show", as: "show_single_history"
   #get 'articles', to: "articles#index"
   #get 'articles/:id', to: "articles#show"
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

@@ -1,0 +1,164 @@
+<h1>Сведения о правке статьи "<%= @article.title %>"</h1>
+<div>
+  Дата совершения правки: <%=@history.action_date.getlocal("+03:00").to_formatted_s(:db) %>
+</div>
+<div>
+  Пользователь, совершивший правку:
+  <% if User.exists?(@history.user_id) %>
+    <% u = User.find(@history.user_id) %>
+    <%= link_to(u.name, users_profile_path_path(u.id)) %>
+  <% else %>
+    <%= "Пользователь удален" %>
+  <% end %>
+</div>
+<div>Тип правки:
+  <% if @history.action_type == 0 %>
+    <%= "Создание" %>
+  <% elsif @history.action_type == 1 %>
+    <%= "Обновление" %>
+  <% elsif @history.action_type == 2 %>
+    <%= "Удаление" %>
+  <% end %>
+</div>
+<% if @history.previous_archived_id == nil %>
+  <h2>Просмотр подробностей для данной правки не поддерживается!</h2>
+<% else %>
+  <div>Идентификатор записи <%=@history.id%></div>
+  <%if @history.article != nil %>
+    <div>Идентификатор статьи <%=@history.article.id%></div>
+  <% end %>
+  <div>Предыдущая статья (архивная) <%=@history.previous_archived_id%></div>
+  <div>Следующая статья (архивная) <%=@history.next_archived_id%></div>
+  <table class="versions-table">
+    <tr>
+      <th class="field-name">Название поля</th>
+      <th class="prev-info">Предыдущая версия</th>
+      <th class="difference"></th>
+      <%if @next_archived != nil %>
+        <th class="next-info">Следующая версия</th>
+      <% end %>
+    </tr>
+    <tr>
+      <td class="field-name">Название</td>
+      <td class="prev-info"><%= @previous_archived.title %></td>
+      <td class="difference"></td>
+      <%if @next_archived != nil %>
+        <td class="next-info"><%= @next_archived.title %></td>
+      <% end %>
+    </tr>
+    <tr>
+      <td class="field-name">Текст</td>
+      <td class="prev-info"><%= @previous_archived.body %></td>
+      <% if @body_diff == nil || @body_diff == 0 %>
+        <td class="difference"></td>
+      <% else %>
+        <td class="difference"><%= @body_diff > 0 ? "+" + @body_diff.to_s + " символов" : @body_diff.to_s + " символов" %></td>
+      <% end %>
+
+      <%if @next_archived != nil %>
+        <td class="next-info"><%= @next_archived.body %></td>
+      <% end %>
+    </tr>
+    <tr>
+      <td class="field-name">Дата рождения</td>
+      <td class="prev-info"><%= @previous_archived.birthdate %></td>
+      <td class="difference"></td>
+      <%if @next_archived != nil %>
+        <td class="next-info"><%= @next_archived.birthdate %></td>
+      <% end %>
+    </tr>
+    <tr>
+      <td class="field-name">Дата смерти</td>
+      <td class="prev-info"><%= @previous_archived.deathdate %></td>
+      <td class="difference"></td>
+      <%if @next_archived != nil %>
+        <td class="next-info"><%= @next_archived.deathdate %></td>
+      <% end %>
+    </tr>
+    <tr>
+      <td class="field-name">Страна рождения</td>
+      <td class="prev-info"><%= @previous_archived.birth_country %></td>
+      <td class="difference"></td>
+      <%if @next_archived != nil %>
+        <td class="next-info"><%= @next_archived.birth_country %></td>
+      <% end %>
+    </tr>
+    <tr>
+      <td class="field-name">Место рождения</td>
+      <td class="prev-info"><%= @previous_archived.birth_place %></td>
+      <td class="difference"></td>
+      <%if @next_archived != nil %>
+        <td class="next-info"><%= @next_archived.birth_place %></td>
+      <% end %>
+    </tr>
+    <tr>
+      <td class="field-name">Страна смерти</td>
+      <td class="prev-info"><%= @previous_archived.death_country %></td>
+      <td class="difference"></td>
+      <%if @next_archived != nil %>
+        <td class="next-info"><%= @next_archived.death_country %></td>
+      <% end %>
+    </tr>
+    <tr>
+      <td class="field-name">Место смерти</td>
+      <td class="prev-info"><%= @previous_archived.death_place %></td>
+      <td class="difference"></td>
+      <%if @next_archived != nil %>
+        <td class="next-info"><%= @next_archived.death_place %></td>
+      <% end %>
+    </tr>
+    <tr>
+      <td class="field-name">Ресурсы</td>
+      <td class="prev-info"><%= @previous_archived.resources %></td>
+      <td class="difference"></td>
+      <%if @next_archived != nil %>
+        <td class="next-info"><%= @next_archived.resources %></td>
+      <% end %>
+    </tr>
+    <tr>
+      <td class="field-name">Должности</td>
+      <td class="prev-info"><%= @previous_archived.duties %></td>
+      <td class="difference"></td>
+      <%if @next_archived != nil %>
+        <td class="next-info"><%= @next_archived.duties %></td>
+      <% end %>
+    </tr>
+    <tr>
+      <td class="field-name">Колонки</td>
+      <td class="prev-info"><%= @previous_archived.columns_data %></td>
+      <td class="difference"></td>
+      <%if @next_archived != nil %>
+        <td class="next-info"><%= @next_archived.columns_data %></td>
+      <% end %>
+    </tr>
+    <tr>
+      <td class="field-name">Координаты</td>
+      <td class="prev-info"><%= @previous_archived.coordinates %></td>
+      <td class="difference"></td>
+      <%if @next_archived != nil %>
+        <td class="next-info"><%= @next_archived.coordinates %></td>
+      <% end %>
+    </tr>
+    <tr>
+      <td class="field-name">Высота над уровнем моря</td>
+      <td class="prev-info"><%= @previous_archived.elevation %></td>
+      <td class="difference"></td>
+      <%if @next_archived != nil %>
+        <td class="next-info"><%= @next_archived.elevation %></td>
+      <% end %>
+    </tr>
+  </table>
+<% end %>
+<div class="history-navigation-links">
+  <div>
+    <% if @previous_history != nil %>
+      <%= link_to("К предыдущей правке", show_single_history_path(@previous_history.id))%>
+    <% end %>
+  </div>
+  <div>
+    <% if @next_history != nil %>
+      <%= link_to("К следующей правке", show_single_history_path(@next_history.id))%>
+    <% end %>
+  </div>
+</div>
+<h1><%= link_to('На главную', controller: "articles", method: "index") %></h1>

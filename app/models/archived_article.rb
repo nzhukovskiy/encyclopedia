@@ -1,0 +1,2 @@
+class ArchivedArticle < ApplicationRecord
+end

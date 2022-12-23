@@ -10,10 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_30_151931) do
+ActiveRecord::Schema.define(version: 2022_12_23_125155) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "archived_articles", force: :cascade do |t|
+    t.string "title"
+    t.text "body"
+    t.datetime "birthdate"
+    t.datetime "deathdate"
+    t.string "job"
+    t.string "birth_country"
+    t.string "birth_place"
+    t.string "death_country"
+    t.string "death_place"
+    t.text "resources", default: "[]"
+    t.text "duties", default: "[]"
+    t.text "columns_data", default: "[]"
+    t.text "coordinates", default: ""
+    t.float "elevation"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "articles", force: :cascade do |t|
     t.string "title"
@@ -52,7 +71,11 @@ ActiveRecord::Schema.define(version: 2022_01_30_151931) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "action_type"
+    t.bigint "previous_archived_id"
+    t.bigint "next_archived_id"
     t.index ["article_id"], name: "index_histories_on_article_id"
+    t.index ["next_archived_id"], name: "index_histories_on_next_archived_id"
+    t.index ["previous_archived_id"], name: "index_histories_on_previous_archived_id"
     t.index ["user_id"], name: "index_histories_on_user_id"
   end
 
@@ -63,4 +86,6 @@ ActiveRecord::Schema.define(version: 2022_01_30_151931) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "histories", "archived_articles", column: "next_archived_id"
+  add_foreign_key "histories", "archived_articles", column: "previous_archived_id"
 end
